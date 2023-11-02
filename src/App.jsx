@@ -67,6 +67,7 @@ function App() {
   const [currentList, setList] = useState(list);
   const [draggedCard, setDraggedCard] = useState(null);
 
+  //toggling the selection state by filtering out or adding the selected item based on its presence
   const handleCheckboxChange = (id) => {
     if (selectedItems.includes(id)) {
       setSelectedItems(selectedItems.filter((item) => item !== id));
@@ -75,12 +76,14 @@ function App() {
     }
   };
 
+  // Remove selected items from the current list and clear the selection.
   const handleDelete = () => {
     const updatedList = currentList.filter((item) => !selectedItems.includes(item.id));
     setList(updatedList);
     setSelectedItems([]);
   };
 
+  // Toggle the selection of all items: If all items are selected, clear the selection.otherwise, select all items.
   function handleSelectAll() {
     if (selectedItems.length === currentList.length) {
       setSelectedItems([]);
@@ -89,14 +92,17 @@ function App() {
     }
   }
 
+  // Set the `id` of the card being dragged when a drag operation starts.
   const handleDragStart = (id) => {
     setDraggedCard(id);
   };
 
+  // Clear the `draggedCard` state when the drag operation ends.
   const handleDragEnd = () => {
     setDraggedCard(null);
   };
 
+  // Handle the drop event by swapping the positions of the dragged card and the target card in the list.
   const handleDrop = (id) => {
     if (draggedCard !== id) {
       const updatedList = [...currentList];
@@ -107,6 +113,7 @@ function App() {
     }
   };
 
+  // Swap the positions of two cards in the list based on their `sourceId` and `targetId`.
   const handleSwapCards = (sourceId, targetId) => {
     const sourceIndex = currentList.findIndex((item) => item.id === sourceId);
     const targetIndex = currentList.findIndex((item) => item.id === targetId);
@@ -121,6 +128,7 @@ function App() {
 
   return (
     <div className="container mx-auto bg-white px-5 py-3 rounded-md">
+      {/* full top bar section with conditional randering */}
       <div className='full-top-bar py-4 border-b border-b-gray-400'>
         {selectedItems.length <= 0 ? (
           <div className='gallery-title flex justify-start items-start'>
@@ -149,7 +157,8 @@ function App() {
           </div>
         )}
       </div>
-
+      
+      {/* full gallery grid section */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-4">
         {currentList.map((item, index) => (
           <div key={item.id} className={`w-full h-auto ${index === 0 ? 'col-span-2 row-span-2' : 'col-auto row-auto'}`}>
@@ -166,6 +175,8 @@ function App() {
             />
           </div>
         ))}
+
+        {/* add image button */}
         <div className="flex items-center justify-center w-full">
           <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded cursor-pointer bg-gray-50 hover:bg-gray-100">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
