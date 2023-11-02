@@ -121,26 +121,35 @@ function App() {
 
   return (
     <div className="container mx-auto bg-white px-5 py-3 rounded-md">
-      <div className="flex justify-between items-center py-4 border-b border-b-gray-400">
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            checked={selectedItems.length > 0}
-            onChange={() => handleSelectAll()}
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-          />
-          <label className="ml-2 text-lg font-semibold text-gray-900">
-            <span>{selectedItems.length}</span> File Selected
-          </label>
-        </div>
-        <button
-          onClick={handleDelete}
-          className="text-lg font-semibold text-red-400"
-          disabled={selectedItems.length === 0}
-        >
-          Delete file
-        </button>
+      <div className='full-top-bar py-4 border-b border-b-gray-400'>
+        {selectedItems.length <= 0 ? (
+          <div className='gallery-title flex justify-start items-start'>
+            <h2 className='text-lg font-semibold text-gray-900'>Gallery</h2>
+          </div>
+        ) : (
+          <div className="select-and-delete flex justify-between items-center">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                checked={selectedItems.length > 0}
+                onChange={() => handleSelectAll()}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+              />
+              <label className="ml-2 text-lg font-semibold text-gray-900">
+                <span>{selectedItems.length}</span> File Selected
+              </label>
+            </div>
+            <button
+              onClick={handleDelete}
+              className="text-lg font-semibold text-red-400"
+              disabled={selectedItems.length === 0}
+            >
+              Delete file
+            </button>
+          </div>
+        )}
       </div>
+
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-4">
         {currentList.map((item, index) => (
           <div key={item.id} className={`w-full h-auto ${index === 0 ? 'col-span-2 row-span-2' : 'col-auto row-auto'}`}>
