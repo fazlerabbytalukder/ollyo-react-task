@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css'
-import Cards from './components/cards'
+import Cards from './components/Cards';
 
 const list = [
   {
